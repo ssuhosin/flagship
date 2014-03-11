@@ -1,0 +1,188 @@
+-- 회원정보
+DROP TABLE IF EXISTS MEMBERS RESTRICT;
+
+-- 좌표정보
+DROP TABLE IF EXISTS POINTS RESTRICT;
+
+-- 사진정보
+DROP TABLE IF EXISTS PHOTOS RESTRICT;
+
+-- 여행
+DROP TABLE IF EXISTS CONTENTS RESTRICT;
+
+-- 장소정보
+DROP TABLE IF EXISTS LOCATIONS RESTRICT;
+
+-- 이동수단
+DROP TABLE IF EXISTS TRANSPORTS RESTRICT;
+
+-- 회원정보
+CREATE TABLE MEMBERS (
+  MNO   INTEGER     NOT NULL COMMENT '회원번호', -- 회원번호
+  EMAIL VARCHAR(40) NOT NULL COMMENT '이메일', -- 이메일
+  PWD   VARCHAR(20) NOT NULL COMMENT '패스워드', -- 패스워드
+  FREQ  INTEGER     NULL     COMMENT 'GPS감지빈도', -- GPS감지빈도
+  STATE INTEGER     NULL     COMMENT '걷는속도' -- 걷는속도
+)
+COMMENT '회원정보';
+
+-- 회원정보
+ALTER TABLE MEMBERS
+  ADD CONSTRAINT PK_MEMBERS -- 회원정보 기본키
+    PRIMARY KEY (
+      MNO -- 회원번호
+    );
+
+-- 회원정보 유니크 인덱스
+CREATE UNIQUE INDEX UIX_MEMBERS
+  ON MEMBERS ( -- 회원정보
+    EMAIL ASC -- 이메일
+  );
+
+ALTER TABLE MEMBERS
+  MODIFY COLUMN MNO INTEGER NOT NULL AUTO_INCREMENT COMMENT '회원번호';
+
+-- 좌표정보
+CREATE TABLE POINTS (
+  PNO   INTEGER  NOT NULL COMMENT '좌표번호', -- 좌표번호
+  CNO   INTEGER  NULL     COMMENT '여행번호', -- 여행번호
+  LNO   INTEGER  NULL     COMMENT '장소번호', -- 장소번호
+  LAT   DOUBLE   NOT NULL COMMENT '위도', -- 위도
+  LNG   DOUBLE   NOT NULL COMMENT '경도', -- 경도
+  PDATE DATETIME NULL     COMMENT '등록시간', -- 등록시간
+  STATE INTEGER  NULL     COMMENT '상태' -- 상태
+)
+COMMENT '좌표정보';
+
+-- 좌표정보
+ALTER TABLE POINTS
+  ADD CONSTRAINT PK_POINTS -- 좌표정보 기본키
+    PRIMARY KEY (
+      PNO -- 좌표번호
+    );
+
+ALTER TABLE POINTS
+  MODIFY COLUMN PNO INTEGER NOT NULL AUTO_INCREMENT COMMENT '좌표번호';
+
+-- 사진정보
+CREATE TABLE PHOTOS (
+  PHNO INTEGER      NOT NULL COMMENT '사진번호', -- 사진번호
+  LNO  INTEGER      NOT NULL COMMENT '장소번호', -- 장소번호
+  PATH VARCHAR(255) NOT NULL COMMENT '사진경로' -- 사진경로
+)
+COMMENT '사진정보';
+
+-- 사진정보
+ALTER TABLE PHOTOS
+  ADD CONSTRAINT PK_PHOTOS -- 사진정보 기본키
+    PRIMARY KEY (
+      PHNO -- 사진번호
+    );
+
+ALTER TABLE PHOTOS
+  MODIFY COLUMN PHNO INTEGER NOT NULL AUTO_INCREMENT COMMENT '사진번호';
+
+-- 여행
+CREATE TABLE CONTENTS (
+  CNO   INTEGER      NOT NULL COMMENT '여행번호', -- 여행번호
+  MNO   INTEGER      NOT NULL COMMENT '회원번호', -- 회원번호
+  TITLE VARCHAR(255) NULL     COMMENT '제목', -- 제목
+  CDATE DATETIME     NOT NULL COMMENT '등록날짜' -- 등록날짜
+)
+COMMENT '여행';
+
+-- 여행
+ALTER TABLE CONTENTS
+  ADD CONSTRAINT PK_CONTENTS -- 여행 기본키
+    PRIMARY KEY (
+      CNO -- 여행번호
+    );
+
+ALTER TABLE CONTENTS
+  MODIFY COLUMN CNO INTEGER NOT NULL AUTO_INCREMENT COMMENT '여행번호';
+
+-- 장소정보
+CREATE TABLE LOCATIONS (
+  LNO         INTEGER      NOT NULL COMMENT '장소번호', -- 장소번호
+  TITLE       VARCHAR(255) NULL     COMMENT '장소명', -- 장소명
+  DISCRIPTION TEXT         NULL     COMMENT '내용' -- 내용
+)
+COMMENT '장소정보';
+
+-- 장소정보
+ALTER TABLE LOCATIONS
+  ADD CONSTRAINT PK_LOCATIONS -- 장소정보 기본키
+    PRIMARY KEY (
+      LNO -- 장소번호
+    );
+
+ALTER TABLE LOCATIONS
+  MODIFY COLUMN LNO INTEGER NOT NULL AUTO_INCREMENT COMMENT '장소번호';
+
+-- 이동수단
+CREATE TABLE TRANSPORTS (
+  TNO   INTEGER NOT NULL COMMENT '경로정보', -- 경로정보
+  PNO   INTEGER NULL     COMMENT '시작좌표', -- 시작좌표
+  STATE INTEGER NULL     COMMENT '이동수단' -- 이동수단
+)
+COMMENT '이동수단';
+
+-- 이동수단
+ALTER TABLE TRANSPORTS
+  ADD CONSTRAINT PK_TRANSPORTS -- 이동수단 기본키
+    PRIMARY KEY (
+      TNO -- 경로정보
+    );
+
+ALTER TABLE TRANSPORTS
+  MODIFY COLUMN TNO INTEGER NOT NULL AUTO_INCREMENT COMMENT '경로정보';
+
+-- 좌표정보
+ALTER TABLE POINTS
+  ADD CONSTRAINT FK_CONTENTS_TO_POINTS -- 여행 -> 좌표정보
+    FOREIGN KEY (
+      CNO -- 여행번호
+    )
+    REFERENCES CONTENTS ( -- 여행
+      CNO -- 여행번호
+    );
+
+-- 좌표정보
+ALTER TABLE POINTS
+  ADD CONSTRAINT FK_LOCATIONS_TO_POINTS -- 장소정보 -> 좌표정보
+    FOREIGN KEY (
+      LNO -- 장소번호
+    )
+    REFERENCES LOCATIONS ( -- 장소정보
+      LNO -- 장소번호
+    );
+
+-- 사진정보
+ALTER TABLE PHOTOS
+  ADD CONSTRAINT FK_LOCATIONS_TO_PHOTOS -- 장소정보 -> 사진정보
+    FOREIGN KEY (
+      LNO -- 장소번호
+    )
+    REFERENCES LOCATIONS ( -- 장소정보
+      LNO -- 장소번호
+    );
+
+-- 여행
+ALTER TABLE CONTENTS
+  ADD CONSTRAINT FK_MEMBERS_TO_CONTENTS -- 회원정보 -> 여행
+    FOREIGN KEY (
+      MNO -- 회원번호
+    )
+    REFERENCES MEMBERS ( -- 회원정보
+      MNO -- 회원번호
+    );
+
+-- 이동수단
+ALTER TABLE TRANSPORTS
+  ADD CONSTRAINT FK_POINTS_TO_TRANSPORTS -- 좌표정보 -> 이동수단
+    FOREIGN KEY (
+      PNO -- 시작좌표
+    )
+    REFERENCES POINTS ( -- 좌표정보
+      PNO -- 좌표번호
+    );
