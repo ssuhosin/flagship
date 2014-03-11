@@ -71,7 +71,7 @@
 	<bean
 		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
 		<property name="webBindingInitializer">
-			<bean class="spms.propertyeditors.SpmsBindingInitializer" />
+			<bean class="flagship.propertyeditors.FlagshipBindingInitializer" />
 		</property>
 	</bean>
 
