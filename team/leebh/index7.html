@@ -1,0 +1,223 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Metro Tiles UI Kit for Iphone, Android and Smartphone Website Templates | Home :: w3layouts</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link href="smartphone/css/style.css" rel="stylesheet" type="text/css" media="all" />
+		<script src="smartphone/js/jquery.js" type="text/javascript"></script>
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+
+<style type="text/css">
+.news-tabs li {
+	list-style: none;
+	display: inline;
+	float: left;
+	width: 49.8%;
+	text-align: center;
+}
+
+.news-tabs li:first-child {
+	border-right: 1px solid rgba(144, 149, 170, 0.22);
+}
+
+.news-tabs a {
+	padding: 16px 40px;
+	display: inline-block;
+	color: #3F67C0;
+	text-decoration: none;
+	text-transform: uppercase;
+}
+
+.news-tabs a.active {
+	color: #FFF;
+	background: #3F67C0;
+	padding: 1em 0;
+	display: block;
+}
+
+.news-tabs {
+	background: #fff;
+	border-bottom: 1px solid rgba(144, 149, 170, 0.22);
+}
+.clear {
+	clear: both;
+}
+.tabs-cal-social{
+	margin-top: 1em;
+}
+.tabs-right{
+	background: #fff;
+}
+</style>
+
+	   <script>
+	   jQuery.noConflict(); 
+	   (function($){
+	   window.onload=function(){ 
+	     var xhr = new XMLHttpRequest();
+	     xhr.onreadystatechange = function() {
+	       if(xhr.readyState == 4) { 
+	         if(xhr.status == 200) {
+	           var jsonResult = JSON.parse(xhr.responseText).jsonResult;
+	           if(jsonResult.resultStatus == 1) {
+	             alert('시스템이 바쁩니다.\n 나중에 다시 시도해 주세요!');
+	             console.log('서버 요청 오류!\n' + jsonResult.error); //프론트엔드 개발자가 에러를 확인할 수 있도록 보여줌
+	           } else {
+	          	 
+	          	   var contents = jsonResult.data;
+		       	   var div1 = null;
+		       	   var div2 = null;
+		       	   var div3 = null;
+		       	   var imgTag = null;
+		       	   var divclear = null;
+		       	   var pTag = null;
+		       	   var cdate = null;
+		       	   
+		       	   for(var j = 0; j < contents.length; j++){
+		       	 	
+		       	  	 
+		       	   div1 = document.createElement('div');
+		       	   div1.setAttribute("class", "latest-news-tab-grid frist-news-grid");
+		       	   document.body.appendChild(div1);
+		       	   jQuery(div1).css("background","#E1E2E9").css("margin-bottom","1px").css("margin","0.7em 0").css("cursor","pointer");
+		       	   
+		       	   
+		       	   
+		           div2 = document.createElement('div');
+		       	   div2.setAttribute("class", "latest-news-tab-grid-pic");
+		       	   div1.appendChild(div2);
+		       	   jQuery(div2).css("float","left").css("width","40%");
+	               
+		       	   
+		       	   imgTag = document.createElement('img');
+		           imgTag.setAttribute('src','http://www.nemopan.com/files/attach/images/16448/367/965/005/%ED%95%9C%EC%98%88%EC%8A%AC.jpg');
+		       	   div2.appendChild(imgTag);
+		       	   jQuery(imgTag).css("display","block").css("width","block");
+		       	   
+		       	   div3 = document.createElement('div');
+		       	   div3.setAttribute('class','latest-news-tab-grid-info');
+		       	   div1.appendChild(div3);
+		       	   jQuery(div3).css("float","right").css("width","57%").css("padding",".3em 0");
+		       	   
+		       	   divclear = document.createElement('div');
+		       	   divclear.setAttribute('class','clear');
+		       	   div1.appendChild(divclear);
+		       	   
+		       	   
+		       	   pTag = document.createElement('p');
+		       	   jQuery(pTag).text(contents[j].title);
+		       	   div3.appendChild(pTag);
+		       	   jQuery(pTag).css("font-size","0.875em").css("color","#0F112A").css("width","97%").css("line-height","1.5em");
+		       	    
+		       	   cdate = new Date(contents[j].cdate);
+		       	   
+		       	   pTag = document.createElement('p');
+		       	   jQuery(pTag).text(contents[j].cdate);
+// 		       	   jQuery(pTag).text(cdate.getFullYear() + "/" + (cdate.getMonth()+1) + "/" + cdate.getDate());
+		       	   div3.appendChild(pTag);
+		       	   jQuery(pTag).css("font-size","0.875em").css("color","#0F112A").css("width","97%").css("line-height","1.5em");
+		       	   
+		       	   
+		       	   
+	           	}
+	           }
+	         }
+	       }
+	     };
+	     xhr.open('GET','content/ajax/list.do',true);   
+	     xhr.send();
+	   }
+	   })(jQuery);
+	   
+	   </script>
+	</head>
+	<body>
+
+        
+    <!----->
+				<div class="tabs-cal-social">
+				<div class="tabs-right">
+							<ul class="news-tabs">
+							<li><a href="#tab1" class="active">Contents</a></li>
+							<li><a href="#tab2">Setting</a></li>
+							<div class="clear"> </div>
+						</ul>
+						<div id="tab1">
+						
+					
+							
+						 <!--
+						 
+						 .clear{clear:both;}
+						 
+		       	            <div class="latest-news-tab-grid frist-news-grid" onclick="location.href='#';">
+								<div class="latest-news-tab-grid-pic">
+									<img src="smartphone/images/tab-img1.jpg" alt="">
+								</div>
+								<div class="latest-news-tab-grid-info">
+									<p>In pharetra pretium convallis. mi hendrerit varius.,</p>
+								</div>
+								<div class="clear"> </div>
+							</div>
+				         ---> 
+						
+						
+						</div>
+						
+						<!---tabs-script
+						<script>
+							// Wait until the DOM has loaded before querying the document
+							$(document).ready(function(){
+								$('ul.news-tabs').each(function(){
+									// For each set of tabs, we want to keep track of
+									// which tab is active and it's associated content
+									var $active, $content, $links = $(this).find('a');
+										// If the location.hash matches one of the links, use that as the active tab.
+									// If no match is found, use the first link as the initial active tab.
+									$active = $($links.filter('[href="'+location.hash+'"]')[0] || $links[0]);
+									$active.addClass('active');
+									$content = $($active.attr('href'));
+									// Hide the remaining content
+									$links.not($active).each(function () {
+										$($(this).attr('href')).hide();
+									});
+									// Bind the click event handler
+									$(this).on('click', 'a', function(e){
+										// Make the old tab inactive.
+										$active.removeClass('active');
+										$content.hide();
+										// Update the variables with the new link and content
+										$active = $(this);
+										$content = $($(this).attr('href'));
+										// Make the tab active.
+										$active.addClass('active');
+										$content.show();
+										// Prevent the anchor's default click action
+										e.preventDefault();
+									});
+								});
+							});
+						</script>
+						tabs-script----->
+						
+				</div>
+				<!---//End-blog and tabs-section---->
+        
+        
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
