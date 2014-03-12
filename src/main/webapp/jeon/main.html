@@ -9,10 +9,14 @@
 </script>
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
-<script src="js/map-1.1.js"></script>
+<script src="../js/bit.js"></script>
+<script src="../js/app.js"></script>
+<script src="../js/map-1.1.js"></script>
+<script src="../js/content.js"></script>
 
 <script type="text/javascript">
 
+var centerPoint;
 var flag = 0;
 function moveMap() {
   var locationsID = document.getElementById("locationsID");
@@ -22,7 +26,7 @@ function moveMap() {
     jQuery(locationsID).css("display","none");
     jQuery(mapCan).css("display","block");
     google.maps.event.trigger(map, 'resize');
-    map.setCenter(new google.maps.LatLng(37.554666,126.970698));
+    map.setCenter(centerPoint);
   
     flag = 1;
   } else {
@@ -32,10 +36,28 @@ function moveMap() {
   }
 }
 
+// function contentClassListner(id) {
+// 	var elemArray = document.getElementsByClassName(id);
+// 	console.log(elemArray.length);
+// // 	var contentTag = document.getElementById(id);
+// // 	console.log(contentTag);
+// // 	element.onclick = function() {
+// // 		console.log("okok");
+// // 	};
+// }
+
+
 $(document).ready(function(){
 	initialize();
+	//contentClassListner('content');
+	//listPoint();
 	//google.maps.event.trigger(map, 'resize');
 });
+
+// window.onload = function() {
+	
+// };
+
 </script>
 
 </head>
@@ -46,8 +68,11 @@ $(document).ready(function(){
     </ul>
 	</div>
 
-  <a href="#" onclick="moveMap()" style="position: fixed; top: 100px; z-index: 1000">MOVE</a>
-  <div id="locationsID"></div>
+  <div id="contentID"></div>
+
+  <a id="moveID"  href="#" onclick="moveMap()" style="position: fixed; top: 100px; z-index: 1000; display: none">MOVE</a>
+  <div id="locationsID" style="display: none"></div>
 	<div id="map_canvas" style="height:444px; display: none"></div>
+	
 </body>
 </html>

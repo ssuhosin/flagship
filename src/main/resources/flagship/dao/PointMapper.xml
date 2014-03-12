@@ -16,6 +16,12 @@
 		from POINTS
 	</select>
 	
+	<select id="selectList" parameterType="int" resultMap="pointResultMap">
+		select PNO,LAT,LNG,PDATE,STATE
+		from POINTS
+		where CNO = #{value}
+	</select>
+	
 	</mapper>
 
 
