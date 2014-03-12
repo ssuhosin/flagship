@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="flagship.dao.LocationDao">
+  <resultMap type="location" id="locationResultMap">
+    <id     property="no"       column="LNO"/>
+    <result property="title"     column="TITLE"/>
+    <result property="description"      column="DESCRIPTION"/>
+  </resultMap>
+	
+	<select id="selectAll" resultMap="locationResultMap">
+		select LNO,TITLE,DESCRIPTION
+		from LOCATIONS
+	</select>
+	
+	</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
