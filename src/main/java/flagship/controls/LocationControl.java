@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import flagship.dao.LocationDao;
+import flagship.dao.PhotoDao;
 import flagship.vo.JsonResult;
 import flagship.vo.Location;
 
@@ -24,6 +25,9 @@ public class LocationControl {
 	@Autowired(required=false)
 	LocationDao locationDao;
 
+	@Autowired(required=false)
+	PhotoDao photoDao;
+
 	
 //	@RequestMapping("/list")
 //	public String list(Model model) throws Exception {
@@ -31,9 +35,27 @@ public class LocationControl {
 //		return "point/list";
 //	}
 	
+//	@RequestMapping(value="/ajax/list", produces="application/json")
+//	public Object ajaxList() throws Exception {
+//		List<Location> list =  locationDao.selectAll();
+//		
+//		try {
+//			return new JsonResult().setResultStatus(JsonResult.SUCCESS) 
+//					.setData(list);
+//			
+//		} catch (Throwable ex) {
+//			return new JsonResult().setResultStatus(JsonResult.FAILURE)
+//					.setError(ex.getMessage());
+//		}
+//	}
+
 	@RequestMapping(value="/ajax/list", produces="application/json")
-	public Object ajaxList() throws Exception {
-		List<Location> list =  locationDao.selectAll();
+	public Object ajaxList(int no) throws Exception {
+		List<Location> list =  locationDao.selectList(no);
+		
+		for(Location location : list) {
+			location.setPhotos(photoDao.selectList(location.getNo()));
+		}
 		
 		try {
 			return new JsonResult().setResultStatus(JsonResult.SUCCESS) 
@@ -43,6 +65,5 @@ public class LocationControl {
 			return new JsonResult().setResultStatus(JsonResult.FAILURE)
 					.setError(ex.getMessage());
 		}
-		
 	}
 }

@@ -9,24 +9,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import flagship.dao.PointDao;
-import flagship.dao.TransportDao;
+import flagship.dao.PhotoDao;
 import flagship.vo.JsonResult;
-import flagship.vo.Point;
+import flagship.vo.Photo;
 
 @Controller
-@RequestMapping("/point")
-public class PointControl {
-	Logger log = Logger.getLogger(PointControl.class);
+@RequestMapping("/photo")
+public class PhotoControl {
+	Logger log = Logger.getLogger(PhotoControl.class);
 	
 	@Autowired
 	ServletContext servletContext;
 	
 	@Autowired(required=false)
-	PointDao pointDao;
+	PhotoDao photoDao;
 
-	@Autowired(required=false)
-	TransportDao transportDao;
 	
 //	@RequestMapping("/list")
 //	public String list(Model model) throws Exception {
@@ -34,13 +31,23 @@ public class PointControl {
 //		return "point/list";
 //	}
 	
+//	@RequestMapping(value="/ajax/list", produces="application/json")
+//	public Object ajaxList() throws Exception {
+//		List<Location> list =  locationDao.selectAll();
+//		
+//		try {
+//			return new JsonResult().setResultStatus(JsonResult.SUCCESS) 
+//					.setData(list);
+//			
+//		} catch (Throwable ex) {
+//			return new JsonResult().setResultStatus(JsonResult.FAILURE)
+//					.setError(ex.getMessage());
+//		}
+//	}
+
 	@RequestMapping(value="/ajax/list", produces="application/json")
 	public Object ajaxList(int no) throws Exception {
-		List<Point> list =  pointDao.selectList(no);
-		
-		for(Point point : list) {
-			point.setTransport(transportDao.selectOne(point.getNo()));
-		}
+		List<Photo> list =  photoDao.selectList(no);
 		
 		try {
 			return new JsonResult().setResultStatus(JsonResult.SUCCESS) 
@@ -50,6 +57,5 @@ public class PointControl {
 			return new JsonResult().setResultStatus(JsonResult.FAILURE)
 					.setError(ex.getMessage());
 		}
-		
 	}
 }
