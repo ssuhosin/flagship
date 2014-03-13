@@ -13,6 +13,12 @@
 		select LNO,TITLE,DESCRIPTION
 		from LOCATIONS
 	</select>
+
+	<select id="selectList" parameterType="int" resultMap="locationResultMap">
+		select T1.LNO, T1.TITLE, T1.DESCRIPTION
+    from LOCATIONS T1 left outer join POINTS T2 using(LNO)
+    where T2.CNO = #{value};
+	</select>
 	
 	</mapper>
 

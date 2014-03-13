@@ -1,5 +1,5 @@
 function drawPoint(no) {
-	bit.ajax('../point/ajax/list.do?no='+no, {
+	flagship.ajax('../point/ajax/list.do?no='+no, {
 		method: 'GET',
 		success: function(points){
 		  var pointsData = points;

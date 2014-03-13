@@ -1,4 +1,5 @@
 var map;
+var centerPoint = new google.maps.LatLng(37.554666,126.970698);
 function initialize() {
   var mapOptions = {
   		Zoom : 15,
