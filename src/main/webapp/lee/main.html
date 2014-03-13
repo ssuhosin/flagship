@@ -40,6 +40,12 @@ $(document).ready(function(){
 	$(document).on("click","#contentBackBtnID",function(){
 	  document.getElementById('locationsID').removeChild(document.getElementById('accordianLoc'));
 		console.log("ooo");
+    for(var i=0; i<poly.length; i++){
+      poly[i].setMap(null);
+    }
+    for(var i=0; i<marksArray.length; i++){
+      marksArray[i].setMap(null);
+    }
 	});
 });
 
