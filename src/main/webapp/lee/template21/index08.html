@@ -48,17 +48,21 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	   	$('#horizontalTab').append("<ul class='resp-tabs-list'></ul>");	
 	   	for(var i = 0; i<4; i++){
           $('#horizontalTab ul').append(                  
-				'<li><span>서울부산영국일본여행</span></li>' +
-				'<div class="clear">' + '</div>'
+				'<li><span>서울부산영국일본여행</span></li>'
 		   );
 	   	}
+	   	$('#horizontalTab ul').append(
+				'<div class="clear">' + '</div>'
+	   	);
 	   	
 	   	$('#horizontalTab').append("<div class='resp-tabs-container'></div>");
 	   	for(var i = 0; i<4; ++i) {
 	   	    $('#horizontalTab .resp-tabs-container').append(
-	   	 	"<div class='tab-1 resp-tab-content resp-tab-content-active' style='display: block;' aria-labelledby='tab_item-0'>" +
-	   	 	"<p>Resurgent economies, set of complex and intriguing.</p></div>"
-	   	 	);
+			      "<div class='tab-'" + i + ">" +
+			      "<a href='#'></a>" +
+			      "<p>Resurgent economies, set of complex and intriguing.</p>"+
+			      "</div>"
+			    );
 	   	}
 		$(".accordion").smk_Accordion({
 			showIcon: true, //boolean
