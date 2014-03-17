@@ -1,13 +1,19 @@
+  var poly;
+		  var marksArray;
+
 function drawPoint(no) {
+	
+	
 	flagship.ajax('../point/ajax/list.do?no='+no, {
 		method: 'GET',
 		success: function(points){
 		  var pointsData = points;
 		  centerPoint = new google.maps.LatLng(pointsData[0].lat,pointsData[0].lng);
-		  var poly = Array();
-		  var marksArray = Array();
+		
 		  var latLng;
-
+      poly = Array();
+      marksArray = Array();
+		  
 		  pointsData.forEach(function(value, key){
 		  	latLng = new google.maps.LatLng(value.lat,value.lng); 
 		  	if(key != 0) {

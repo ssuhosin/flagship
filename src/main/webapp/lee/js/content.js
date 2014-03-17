@@ -17,55 +17,52 @@ window.onload=function(){
 					var divclear = null;
 					var pTag = null;
 					var cdate = null;
-
+					
 					for(var j = 0; j < contents.length; j++){
-						div1 = document.createElement('div');
-						div1.setAttribute("class", "latest-news-tab-grid frist-news-grid");
-
-						document.getElementById('contentID').appendChild(div1);
-						jQuery(div1).css("background","#E1E2E9").css("margin-bottom","1px").css("margin","0.7em 0").css("cursor","pointer");
-
-						div2 = document.createElement('div');
-						div2.setAttribute("class", "latest-news-tab-grid-pic");
-						div1.appendChild(div2);
-						jQuery(div2).css("float","left").css("width","40%");
-
-
-						imgTag = document.createElement('img');
-						imgTag.setAttribute('src','http://www.nemopan.com/files/attach/images/16448/367/965/005/%ED%95%9C%EC%98%88%EC%8A%AC.jpg');
-						div2.appendChild(imgTag);
-						jQuery(imgTag).css("display","block").css("width","block");
-
-						div3 = document.createElement('div');
-						div3.setAttribute('id','content' + j);
-						div3.setAttribute('class','latest-news-tab-grid-info');
-						div3.setAttribute('data-no',contents[j].no);
 						
-						div3.onclick = function(){
-							location.href="#pagetwo";
-							dataCno = this.getAttribute('data-no');
-							drawPoint(dataCno);
-							getLocation(dataCno)
-						}; 
-						
-						div1.appendChild(div3);
-						jQuery(div3).css("float","right").css("width","57%").css("padding",".3em 0");
+					div1 = document.createElement('div');
+					div1.setAttribute("class", "content-grid");
+					document.getElementById('contentID').appendChild(div1);
+					
+					div2 = document.createElement('div');
+					div2.setAttribute("class", "content-grid-pic");
+					div1.appendChild(div2);
+					jQuery(div2).css("float", "left").css("width", "40%");
+					
+					imgTag = document.createElement('img');
+					imgTag.setAttribute('src','http://cfile10.uf.tistory.com/image/18021F4E4D480B940F78F1');
+					div2.appendChild(imgTag);
+					
+					div3 = document.createElement('div');
+					div3.setAttribute('id','content' + j);
+					div3.setAttribute('class','content-grid-info');
+					div3.setAttribute('data-no',contents[j].no);
+					
+					div3.onclick = function(){
+						location.href="#pagetwo";
+						dataCno = this.getAttribute('data-no');
+						drawPoint(dataCno);
+						getLocation(dataCno)
+					}; 
+					
+					div1.appendChild(div3);
+					
+					divclear = document.createElement('div');
+					divclear.setAttribute('class','clear');
+					div1.appendChild(divclear);
+					
+					pTag = document.createElement('p');
+					jQuery(pTag).text(contents[j].title);
+					div3.appendChild(pTag);
 
-						divclear = document.createElement('div');
-						divclear.setAttribute('class','clear');
-						div1.appendChild(divclear);
+					cdate = new Date(contents[j].cdate);
 
-						pTag = document.createElement('p');
-						jQuery(pTag).text(contents[j].title);
-						div3.appendChild(pTag);
-						jQuery(pTag).css("font-size","0.875em").css("color","#0F112A").css("width","97%").css("line-height","1.5em");
-
-						cdate = new Date(contents[j].cdate);
-
-						pTag = document.createElement('p');
-						jQuery(pTag).text(contents[j].cdate);
-						div3.appendChild(pTag);
-						jQuery(pTag).css("font-size","0.875em").css("color","#0F112A").css("width","97%").css("line-height","1.5em");
+					pTag = document.createElement('p');
+					jQuery(pTag).text(contents[j].cdate);
+					div3.appendChild(pTag);
+					
+					
+					
 					}
 				}
 			}
