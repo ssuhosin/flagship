@@ -3,17 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<link href="css/content.css" rel="stylesheet" type="text/css" media="all" />
 <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css" />
 <script type="text/javascript"
 	src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDWJdvu0r-PykFWvN6sv63RDrRmkGNxsRU&sensor=false">
 </script>
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
-<script src="../js/flagship.js"></script>
-<script src="../js/point.js"></script>
-<script src="../js/map-1.1.js"></script>
-<script src="../js/content.js"></script>
-<script src="../js/location.js"></script>
+<script src="js/flagship.js"></script>
+<script src="js/point.js"></script>
+<script src="js/map-1.1.js"></script>
+<script src="js/content.js"></script>
+<script src="js/location.js"></script>
 
 <script type="text/javascript">
 
@@ -39,13 +40,16 @@ $(document).ready(function(){
 
 	$(document).on("click","#contentBackBtnID",function(){
 	  document.getElementById('locationsID').removeChild(document.getElementById('accordianLoc'));
-		console.log("ooo");
+
     for(var i=0; i<poly.length; i++){
-      poly[i].setMap(null);
+     poly[i].setMap(null);
     }
     for(var i=0; i<marksArray.length; i++){
       marksArray[i].setMap(null);
     }
+	}
+	$(document).on("click","#ui-btn",function(){
+	   alert("클릭 했엉");
 	});
 });
 
@@ -60,13 +64,14 @@ $(document).ready(function(){
   <div data-role="main" class="ui-content"> 
     <div id="contentID"></div>
   </div>
+  <button class='ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-edit ui-btn-icon-notext onClick="edit();"'>edit</button>
 </div> 
 
 <div data-role="page" id="pagetwo">
     <div data-role="header">
       <a id='contentBackBtnID' href="#pageone" class="ui-btn ui-btn-inline ui-icon-arrow-l ui-btn-icon-left" data-rel="external">Back</a>
       <h1>LOCATIONS</h1>
-      <a href="#" class="ui-btn ui-icon-location ui-btn-icon-left ui-shadow ui-corner-all" onclick="moveMap()">Map</a>
+      <a href="#" class="ui-btn ui-icon-location ui-btn-icon-right ui-shadow ui-corner-all" onclick="moveMap()">Map</a>
     </div>
   <div data-role="main" class="ui-content" style="padding-left: 0; padding-right: 0">
     <div id="locationsID">
