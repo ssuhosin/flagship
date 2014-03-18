@@ -8,8 +8,10 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import flagship.dao.ContentDao;
+import flagship.dao.MemberDao;
 import flagship.vo.Content;
 import flagship.vo.JsonResult;
 
@@ -24,6 +26,9 @@ public class ContentControl {
 	@Autowired(required=false)
 	ContentDao contentDao;
 
+	@Autowired(required=false)
+	MemberDao memberDao;
+
 	
 //	@RequestMapping("/list")
 //	public String list(Model model) throws Exception {
@@ -32,8 +37,8 @@ public class ContentControl {
 //	}
 	
 	@RequestMapping(value="/ajax/list", produces="application/json")
-	public Object ajaxList() throws Exception {
-		List<Content> list =  contentDao.selectList(2);
+	public Object ajaxList(int no) throws Exception {
+		List<Content> list =  contentDao.selectList(no);
 		
 		try {
 			return new JsonResult().setResultStatus(JsonResult.SUCCESS) 
@@ -43,6 +48,18 @@ public class ContentControl {
 			return new JsonResult().setResultStatus(JsonResult.FAILURE)
 					.setError(ex.getMessage());
 		}
-		
+	}
+	
+	@RequestMapping(value="/ajax/add",method=RequestMethod.POST, produces="application/json")
+	public Object ajaxAdd(Content content) throws Exception {
+		try {
+			contentDao.insert(content);
+			return new JsonResult()
+				.setResultStatus(JsonResult.SUCCESS);
+		} catch(Throwable ex) {
+			return new JsonResult()
+				.setResultStatus(JsonResult.FAILURE)
+				.setError(ex.getMessage());
+		}
 	}
 }

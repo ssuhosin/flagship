@@ -5,15 +5,24 @@
 <mapper namespace="flagship.dao.ContentDao">
   <resultMap type="content" id="contentResultMap">
     <id     property="no"       column="CNO"/>
-    <result property="title"     column="TITLE"/>
-    <result property="cdate"      column="CDATE"/>
+    <result property="mno"    column="MNO"/>
+    <result property="title"    column="TITLE"/>
+    <result property="cdate"    column="CDATE"/>
+    <result property="freq"     column="FREQ"/>
+    <result property="speed"     column="SPEED"/>
+    <result property="state"    column="STATE"/>
   </resultMap>
 	
 	<select id="selectList" parameterType="int" resultMap="contentResultMap">
-		select CNO,TITLE,CDATE
+		select CNO,TITLE,CDATE,STATE
 		from CONTENTS
 		where MNO = #{value}
 	</select>
+	
+	<insert id="insert" parameterType="content">
+   INSERT INTO CONTENTS(MNO,TITLE,FREQ,SPEED,STATE,CDATE)
+   VALUES(#{mno},#{title},#{freq},#{speed},#{state},now())
+  </insert>
 	
 	</mapper>
 

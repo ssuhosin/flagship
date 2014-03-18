@@ -7,5 +7,4 @@ public class CustomSqlDateEditor extends PropertyEditorSupport {
 	public void setAsText(String text) throws IllegalArgumentException {
 		this.setValue(java.sql.Date.valueOf(text));
 	}
-
 }
