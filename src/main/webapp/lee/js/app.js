@@ -1,13 +1,11 @@
-var poly = Array();
-var marksArray = Array();
 function drawPoint(no) {
-	flagship.ajax('../point/ajax/list.do?no='+no, {
+	bit.ajax('../point/ajax/list.do?no='+no, {
 		method: 'GET',
 		success: function(points){
 		  var pointsData = points;
 		  centerPoint = new google.maps.LatLng(pointsData[0].lat,pointsData[0].lng);
-		  poly = Array();
-		  marksArray = Array();
+		  var poly = Array();
+		  var marksArray = Array();
 		  var latLng;
 
 		  pointsData.forEach(function(value, key){
