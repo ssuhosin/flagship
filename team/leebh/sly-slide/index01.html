@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>collapsible demo</title>
+  <link rel="stylesheet" href="//code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css">
+  <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script src="//code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
+  
+  <script type="text/javascript">
+  $("ui-btn").click(function () { 
+    alert
+  });
+  </script>
+  
+</head>
+<body>
+ 
+<div data-role="page" id="page1">
+  <div role="main" class="ui-content">
+    <div data-role="collapsible" data-iconpos="right" >
+      <h3>I'm a header</h3>
+      <p>I'm the collapsible content. By default I'm closed, but you can click the header to open me.</p>
+      <div class="ui-contain">
+         <button class='ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-edit ui-btn-icon-notext'>edit</button>
+         <label for="textarea">Text Input : </label>
+         <textarea rows="40" cols="8"></textarea>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+</body>
+</html>
