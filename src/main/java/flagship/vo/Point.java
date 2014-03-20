@@ -6,19 +6,31 @@ import java.sql.Date;
 public class Point implements Serializable{
   private static final long serialVersionUID = 1L;
   protected int no;
+  protected int cno;
+  protected int lno;
   protected double lat;
   protected double lng;
   protected Date pdate;
   protected int state;
-	
   protected Location location;
   protected Transport transport;
-	
 	public int getNo() {
 		return no;
 	}
 	public void setNo(int no) {
 		this.no = no;
+	}
+	public int getCno() {
+		return cno;
+	}
+	public void setCno(int cno) {
+		this.cno = cno;
+	}
+	public int getLno() {
+		return lno;
+	}
+	public void setLno(int lno) {
+		this.lno = lno;
 	}
 	public double getLat() {
 		return lat;
@@ -60,11 +72,13 @@ public class Point implements Serializable{
   public int hashCode() {
 	  final int prime = 31;
 	  int result = 1;
+	  result = prime * result + cno;
 	  long temp;
 	  temp = Double.doubleToLongBits(lat);
 	  result = prime * result + (int) (temp ^ (temp >>> 32));
 	  temp = Double.doubleToLongBits(lng);
 	  result = prime * result + (int) (temp ^ (temp >>> 32));
+	  result = prime * result + lno;
 	  result = prime * result + ((location == null) ? 0 : location.hashCode());
 	  result = prime * result + no;
 	  result = prime * result + ((pdate == null) ? 0 : pdate.hashCode());
@@ -81,9 +95,13 @@ public class Point implements Serializable{
 	  if (getClass() != obj.getClass())
 		  return false;
 	  Point other = (Point) obj;
+	  if (cno != other.cno)
+		  return false;
 	  if (Double.doubleToLongBits(lat) != Double.doubleToLongBits(other.lat))
 		  return false;
 	  if (Double.doubleToLongBits(lng) != Double.doubleToLongBits(other.lng))
+		  return false;
+	  if (lno != other.lno)
 		  return false;
 	  if (location == null) {
 		  if (other.location != null)
@@ -108,10 +126,8 @@ public class Point implements Serializable{
   }
 	@Override
   public String toString() {
-	  return "Point [no=" + no + ", lat=" + lat + ", lng=" + lng + ", pdate="
-	      + pdate + ", state=" + state + ", location=" + location
-	      + ", transport=" + transport + "]";
+	  return "Point [no=" + no + ", cno=" + cno + ", lno=" + lno + ", lat=" + lat
+	      + ", lng=" + lng + ", pdate=" + pdate + ", state=" + state
+	      + ", location=" + location + ", transport=" + transport + "]";
   }
-	
-	
 }

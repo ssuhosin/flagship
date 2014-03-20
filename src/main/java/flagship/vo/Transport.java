@@ -5,13 +5,20 @@ import java.io.Serializable;
 public class Transport implements Serializable{
   private static final long serialVersionUID = 1L;
   protected int no;
+  protected int pno;
   protected int state;
-	
+  
 	public int getNo() {
 		return no;
 	}
 	public void setNo(int no) {
 		this.no = no;
+	}
+	public int getPno() {
+		return pno;
+	}
+	public void setPno(int pno) {
+		this.pno = pno;
 	}
 	public int getState() {
 		return state;
@@ -24,6 +31,7 @@ public class Transport implements Serializable{
 	  final int prime = 31;
 	  int result = 1;
 	  result = prime * result + no;
+	  result = prime * result + pno;
 	  result = prime * result + state;
 	  return result;
   }
@@ -38,14 +46,17 @@ public class Transport implements Serializable{
 	  Transport other = (Transport) obj;
 	  if (no != other.no)
 		  return false;
+	  if (pno != other.pno)
+		  return false;
 	  if (state != other.state)
 		  return false;
 	  return true;
   }
 	@Override
   public String toString() {
-	  return "Transport [no=" + no + ", state=" + state + "]";
+	  return "Transport [no=" + no + ", pno=" + pno + ", state=" + state + "]";
   }
 	
+		
 	
 }
