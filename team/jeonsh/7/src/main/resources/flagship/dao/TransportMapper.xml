@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="flagship.dao.TransportDao">
+  <resultMap type="transport" id="transportResultMap">
+    <id     property="no"       column="TNO"/>
+    <result property="pno"       column="PNO"/>
+    <result property="state"      column="STATE"/>
+  </resultMap>
+	
+	<select id="selectOne" parameterType="int" resultMap="transportResultMap">
+		select TNO,STATE
+		from TRANSPORTS
+		where PNO = #{value};
+	</select>
+	
+	
+	<insert id="insert" parameterType="transport">
+    INSERT INTO TRANSPORTS(PNO,STATE)
+    VALUES(#{pno},#{state})
+  </insert>
+	
+	</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

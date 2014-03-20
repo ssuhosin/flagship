@@ -1,0 +1,40 @@
+
+
+html,body,div,img,p{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline;}
+
+table{border-collapse:collapse;border-spacing:0;}
+a{text-decoration:none;}
+
+.clear{
+clear:both;
+} /*clear float */
+
+body{
+	 background: #2C2664;  
+	 font-family: 'open_sansregular';
+}
+img{
+display:block; 
+width:100%;
+}
+.content-grid{
+background:#E1E2E9;
+margin-bottom:1px;
+margin:0.7em;
+}
+.content-grid-pic{
+float:left;
+width:40%;
+}
+.content-grid-info{
+float:right;
+width:57%;
+padding: 0.3em 0;
+}
+
+p{
+font-size:0.775em;
+color:#0F112A;
+width:97%;
+line-height:1.8em;
+}

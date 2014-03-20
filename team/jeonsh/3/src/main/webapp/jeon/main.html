@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css" />
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDWJdvu0r-PykFWvN6sv63RDrRmkGNxsRU&sensor=false"></script>
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
+<script src="../js/flagship.js"></script>
+<script src="../js/point.js"></script>
+<script src="../js/map-1.1.js"></script>
+<script src="../js/content.js"></script>
+<script src="../js/location.js"></script>
+
+<script type="text/javascript">
+
+var flag = 0;
+var dataCno;
+function moveMap() {
+  if(flag == 0) {
+    location.href="#pagethree";
+    flag = 1;
+  } else {
+  	location.href="#pagetwo";
+    flag = 0;
+  }
+}
+
+$(document).ready(function(){
+	initialize();
+	
+	$(document).on("pageshow","#pagethree",function(){
+		google.maps.event.trigger(map, 'resize');
+		map.setCenter(centerPoint);
+	});
+
+	$(document).on("click","#contentBackBtnID",function(){
+	  document.getElementById('locationsID').removeChild(document.getElementById('accordianLoc'));
+	  for(var i=0; i<poly.length; i++){
+	    poly[i].setMap(null);
+	  }
+	  for(var i=0; i<marksArray.length; i++){
+	    marksArray[i].setMap(null);
+	  }
+	});
+	
+	//$('#contentID a').removeClass("ui-btn-icon-right");
+});
+
+</script>
+
+</head>
+<body>
+<div data-role="page" id="pageone">
+    <div data-role="header">
+      <h1>CONTENTS</h1>
+    </div>
+  <div data-role="main" class="ui-content" style="padding-left: 10px; padding-right: 10px"> 
+    <div id="contentID">
+
+      <ul data-role="listview" data-inset="true">
+        <li>
+          <a href="#">
+            <img class="ui-li-thumb" style="min-height: 80px" src="http://tv03.search.naver.net/nhnsvc?quality=8&size=80x80&q=http://dbscthumb.phinf.naver.net/2765_000_1/20131013135007779_AUPS4Y8LD.jpg/45823.jpg?type=r128_1&wm=N#128x96">
+            <h2>경복궁 광화문</h2>
+            <p>2013-1-1 11:12:00</p>
+          </a>
+        </li>
+       </ul>
+
+    </div>
+  </div>
+</div> 
+
+<div data-role="page" id="pagetwo">
+    <div data-role="header">
+      <a id='contentBackBtnID' href="#pageone" class="ui-btn ui-btn-inline ui-icon-arrow-l ui-btn-icon-left" data-rel="external">Back</a>
+      <h1>LOCATIONS</h1>
+      <a href="#" class="ui-btn ui-icon-location ui-btn-icon-left ui-shadow ui-corner-all" onclick="moveMap()">Map</a>
+    </div>
+  <div data-role="main" class="ui-content" style="padding-left: 0; padding-right: 0">
+    <div id="locationsID">
+    </div>
+<!--     <div id="locationsID" data-role="collapsible-set" data-theme="a" data-content-theme="a"> -->
+<!--     </div> -->
+  </div>
+</div> 
+
+<div data-role="page" id="pagethree">
+    <div data-role="header">
+      <a href="#pagetwo" class="ui-btn ui-btn-inline ui-icon-arrow-l ui-btn-icon-left" data-rel="external">Back</a>
+      <h1>MAP</h1>
+    </div>
+  <div data-role="main" class="ui-content">
+    <div id="map_canvas" style="height: 444px"></div>
+  </div>
+</div> 
+
+	
+</body>
+</html>
