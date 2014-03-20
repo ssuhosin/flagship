@@ -55,11 +55,24 @@ public class ContentControl {
 		try {
 			contentDao.insert(content);
 			return new JsonResult()
-				.setResultStatus(JsonResult.SUCCESS);
+				.setResultStatus(JsonResult.SUCCESS).setData(content);
 		} catch(Throwable ex) {
 			return new JsonResult()
 				.setResultStatus(JsonResult.FAILURE)
 				.setError(ex.getMessage());
+		}
+	}
+
+	@RequestMapping(value="/ajax/updateState",method=RequestMethod.POST, produces="application/json")
+	public Object ajaxUpdateState(Content content) throws Exception {
+		try {
+			contentDao.updateState(content);
+			return new JsonResult()
+			.setResultStatus(JsonResult.SUCCESS);
+		} catch(Throwable ex) {
+			return new JsonResult()
+			.setResultStatus(JsonResult.FAILURE)
+			.setError(ex.getMessage());
 		}
 	}
 }

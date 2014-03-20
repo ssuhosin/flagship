@@ -1,5 +1,6 @@
 package flagship.controls;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -8,9 +9,11 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import flagship.dao.LocationDao;
 import flagship.dao.PhotoDao;
+import flagship.dao.PointDao;
 import flagship.vo.JsonResult;
 import flagship.vo.Location;
 
@@ -24,6 +27,9 @@ public class LocationControl {
 	
 	@Autowired(required=false)
 	LocationDao locationDao;
+
+	@Autowired(required=false)
+	PointDao pointDao;
 
 	@Autowired(required=false)
 	PhotoDao photoDao;
@@ -64,6 +70,27 @@ public class LocationControl {
 		} catch (Throwable ex) {
 			return new JsonResult().setResultStatus(JsonResult.FAILURE)
 					.setError(ex.getMessage());
+		}
+	}
+	
+	@RequestMapping(value="/ajax/add",method=RequestMethod.POST, produces="application/json")
+	public Object ajaxAdd(int pno, String title, String description) throws Exception {
+		HashMap<String,Integer> sqlparamMap = new HashMap<String,Integer>();
+		sqlparamMap.put("no", pno);
+		try {
+			Location location = new Location();
+			location.setTitle(title);
+			location.setDescription(description);
+			
+			locationDao.insert(location);
+			sqlparamMap.put("lno", location.getNo());
+			pointDao.updateLocation(sqlparamMap);
+			return new JsonResult()
+				.setResultStatus(JsonResult.SUCCESS);
+		} catch(Throwable ex) {
+			return new JsonResult()
+				.setResultStatus(JsonResult.FAILURE)
+				.setError(ex.getMessage());
 		}
 	}
 }

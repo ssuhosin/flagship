@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import flagship.dao.PointDao;
 import flagship.dao.TransportDao;
@@ -41,7 +42,6 @@ public class PointControl {
 		for(Point point : list) {
 			point.setTransport(transportDao.selectOne(point.getNo()));
 		}
-		
 		try {
 			return new JsonResult().setResultStatus(JsonResult.SUCCESS) 
 					.setData(list);
@@ -50,6 +50,31 @@ public class PointControl {
 			return new JsonResult().setResultStatus(JsonResult.FAILURE)
 					.setError(ex.getMessage());
 		}
-		
+	}
+	
+	@RequestMapping(value="/ajax/add",method=RequestMethod.POST, produces="application/json")
+	public Object ajaxAdd(Point point) throws Exception {
+		try {
+			pointDao.insert(point);
+			return new JsonResult()
+				.setResultStatus(JsonResult.SUCCESS).setData(point);
+		} catch(Throwable ex) {
+			return new JsonResult()
+				.setResultStatus(JsonResult.FAILURE)
+				.setError(ex.getMessage());
+		}
+	}
+	
+	@RequestMapping(value="/ajax/updateState",method=RequestMethod.POST, produces="application/json")
+	public Object ajaxUpdateState(Point point) throws Exception {
+		try {
+			pointDao.updateState(point);
+			return new JsonResult()
+			.setResultStatus(JsonResult.SUCCESS);
+		} catch(Throwable ex) {
+			return new JsonResult()
+			.setResultStatus(JsonResult.FAILURE)
+			.setError(ex.getMessage());
+		}
 	}
 }
