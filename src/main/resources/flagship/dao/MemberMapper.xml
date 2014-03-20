@@ -6,7 +6,7 @@
   <resultMap type="member" id="memberResultMap">
     <id     property="no"       column="MNO"/>
     <result property="email"    column="EMAIL"/>
-    <result property="pwd" column="PWD"/>
+    <result property="pwd"      column="PWD"/>
   </resultMap>
 	
   <select id="selectByEmailPassword" 
@@ -16,6 +16,19 @@
     from MEMBERS
     where EMAIL=#{email} and PWD=#{password}
   </select>
+  
+  <select id="selectByEmail" 
+      parameterType="member" 
+      resultMap="memberResultMap">
+    select MNO, EMAIL, PWD
+    from MEMBERS
+    where EMAIL=#{email}
+  </select>
+  
+  <insert id="insert" parameterType="member">
+   INSERT INTO MEMBERS(EMAIL, PWD)
+   VALUES(#{email},#{pwd})
+  </insert>
   
 </mapper>
 

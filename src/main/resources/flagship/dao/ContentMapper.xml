@@ -19,10 +19,16 @@
 		where MNO = #{value}
 	</select>
 	
-	<insert id="insert" parameterType="content">
+	<insert id="insert" parameterType="content" useGeneratedKeys="true" keyProperty="no" keyColumn="CNO">
    INSERT INTO CONTENTS(MNO,TITLE,FREQ,SPEED,STATE,CDATE)
    VALUES(#{mno},#{title},#{freq},#{speed},#{state},now())
   </insert>
+	
+	
+	<update id="updateState" parameterType="content">
+	 update CONTENTS set STATE = #{state} 
+   where MNO = #{mno} and STATE = 0; 
+	</update>
 	
 	</mapper>
 

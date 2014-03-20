@@ -5,10 +5,12 @@
 <mapper namespace="flagship.dao.PointDao">
   <resultMap type="point" id="pointResultMap">
     <id     property="no"       column="PNO"/>
-    <result property="lat"     column="LAT"/>
-    <result property="lng"    column="LNG"/>
-    <result property="pdate"      column="PDATE"/>
-    <result property="state"      column="STATE"/>
+    <result property="cno"      column="CNO"/>
+    <result property="lno"      column="LNO"/>
+    <result property="lat"      column="LAT"/>
+    <result property="lng"      column="LNG"/>
+    <result property="pdate"    column="PDATE"/>
+    <result property="state"    column="STATE"/>
   </resultMap>
 	
 	<select id="selectAll" resultMap="pointResultMap">
@@ -21,8 +23,24 @@
 		from POINTS
 		where CNO = #{value}
 	</select>
+
+	<insert id="insert" parameterType="point" useGeneratedKeys="true" keyProperty="no" keyColumn="PNO">
+    INSERT INTO POINTS(CNO,LAT,LNG,PDATE,STATE)
+    VALUES(#{cno},#{lat},#{lng},now(),#{state})
+  </insert>
 	
-	</mapper>
+	<update id="updateState" parameterType="point">
+   update POINTS set STATE = #{state} 
+   where PNO = #{no}; 
+  </update>
+
+	<update id="updateLocation" parameterType="map">
+   update POINTS set LNO = #{lno} 
+   where PNO = #{no}; 
+  </update>
+	
+		
+</mapper>
 
 
 

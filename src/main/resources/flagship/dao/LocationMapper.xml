@@ -20,6 +20,11 @@
     where T2.CNO = #{value};
 	</select>
 	
+	 <insert id="insert" parameterType="location" useGeneratedKeys="true" keyProperty="no" keyColumn="LNO">
+    INSERT INTO LOCATIONS(TITLE,DESCRIPTION)
+    VALUES(#{title},#{description})
+  </insert>
+	
 	</mapper>
 
 

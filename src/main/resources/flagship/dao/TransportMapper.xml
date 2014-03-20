@@ -5,6 +5,7 @@
 <mapper namespace="flagship.dao.TransportDao">
   <resultMap type="transport" id="transportResultMap">
     <id     property="no"       column="TNO"/>
+    <result property="pno"       column="PNO"/>
     <result property="state"      column="STATE"/>
   </resultMap>
 	
@@ -13,6 +14,12 @@
 		from TRANSPORTS
 		where PNO = #{value};
 	</select>
+	
+	
+	<insert id="insert" parameterType="transport">
+    INSERT INTO TRANSPORTS(PNO,STATE)
+    VALUES(#{pno},#{state})
+  </insert>
 	
 	</mapper>
 
