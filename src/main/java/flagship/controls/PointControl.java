@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import flagship.dao.LocationDao;
 import flagship.dao.PointDao;
 import flagship.dao.TransportDao;
 import flagship.vo.JsonResult;
@@ -28,6 +29,9 @@ public class PointControl {
 
 	@Autowired(required=false)
 	TransportDao transportDao;
+
+	@Autowired(required=false)
+	LocationDao locationDao;
 	
 //	@RequestMapping("/list")
 //	public String list(Model model) throws Exception {
@@ -41,10 +45,27 @@ public class PointControl {
 		
 		for(Point point : list) {
 			point.setTransport(transportDao.selectOne(point.getNo()));
+			point.setLocation(locationDao.selectOne(point.getLno()));
 		}
 		try {
 			return new JsonResult().setResultStatus(JsonResult.SUCCESS) 
 					.setData(list);
+		} catch (Throwable ex) {
+			return new JsonResult().setResultStatus(JsonResult.FAILURE)
+					.setError(ex.getMessage());
+		}
+	}
+
+	@RequestMapping(value="/ajax/listLast", produces="application/json")
+	public Object ajaxListLast(int no) throws Exception {
+		List<Point> list =  pointDao.selectList(no);
+		
+		for(Point point : list) {
+			point.setTransport(transportDao.selectOne(point.getNo()));
+		}
+		try {
+			return new JsonResult().setResultStatus(JsonResult.SUCCESS) 
+					.setData(list.get(list.size()-1));
 			
 		} catch (Throwable ex) {
 			return new JsonResult().setResultStatus(JsonResult.FAILURE)

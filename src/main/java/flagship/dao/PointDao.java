@@ -11,4 +11,5 @@ public interface PointDao {
 	public void insert(Point point) throws Exception;
 	public void updateState(Point point) throws Exception;
 	public void updateLocation(Map<String,Integer> paramMap) throws Exception;
+	public Integer selectCount(int no) throws Exception;
 }

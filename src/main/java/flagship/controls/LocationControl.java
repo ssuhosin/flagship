@@ -74,23 +74,51 @@ public class LocationControl {
 	}
 	
 	@RequestMapping(value="/ajax/add",method=RequestMethod.POST, produces="application/json")
-	public Object ajaxAdd(int pno, String title, String description) throws Exception {
+	public Object ajaxAdd(int pno, int cno, String title, String description) throws Exception {
 		HashMap<String,Integer> sqlparamMap = new HashMap<String,Integer>();
 		sqlparamMap.put("no", pno);
 		try {
+			System.out.println(pointDao.selectCount(cno));
 			Location location = new Location();
-			location.setTitle(title);
+			location.setTitle(title + "" + (pointDao.selectCount(cno) +1));
 			location.setDescription(description);
+			
 			
 			locationDao.insert(location);
 			sqlparamMap.put("lno", location.getNo());
 			pointDao.updateLocation(sqlparamMap);
 			return new JsonResult()
-				.setResultStatus(JsonResult.SUCCESS);
+				.setResultStatus(JsonResult.SUCCESS).setData(location);
 		} catch(Throwable ex) {
 			return new JsonResult()
 				.setResultStatus(JsonResult.FAILURE)
 				.setError(ex.getMessage());
+		}
+	}
+	
+	@RequestMapping(value="/ajax/updateTitle",method=RequestMethod.POST, produces="application/json")
+	public Object ajaxUpdateTitle(Location location) throws Exception {
+		try {
+			locationDao.updateTitle(location);
+			return new JsonResult()
+			.setResultStatus(JsonResult.SUCCESS);
+		} catch(Throwable ex) {
+			return new JsonResult()
+			.setResultStatus(JsonResult.FAILURE)
+			.setError(ex.getMessage());
+		}
+	}
+
+	@RequestMapping(value="/ajax/updateDesc",method=RequestMethod.POST, produces="application/json")
+	public Object ajaxUpdateDesc(Location location) throws Exception {
+		try {
+			locationDao.updateDesc(location);
+			return new JsonResult()
+			.setResultStatus(JsonResult.SUCCESS);
+		} catch(Throwable ex) {
+			return new JsonResult()
+			.setResultStatus(JsonResult.FAILURE)
+			.setError(ex.getMessage());
 		}
 	}
 }

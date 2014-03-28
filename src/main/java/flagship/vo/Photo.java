@@ -5,12 +5,19 @@ import java.io.Serializable;
 public class Photo implements Serializable {
   private static final long serialVersionUID = 1L;
 	protected int no;
+	protected int lno;
 	protected String path;
 	public int getNo() {
 		return no;
 	}
 	public void setNo(int no) {
 		this.no = no;
+	}
+	public int getLno() {
+		return lno;
+	}
+	public void setLno(int lno) {
+		this.lno = lno;
 	}
 	public String getPath() {
 		return path;
@@ -22,6 +29,7 @@ public class Photo implements Serializable {
   public int hashCode() {
 	  final int prime = 31;
 	  int result = 1;
+	  result = prime * result + lno;
 	  result = prime * result + no;
 	  result = prime * result + ((path == null) ? 0 : path.hashCode());
 	  return result;
@@ -35,6 +43,8 @@ public class Photo implements Serializable {
 	  if (getClass() != obj.getClass())
 		  return false;
 	  Photo other = (Photo) obj;
+	  if (lno != other.lno)
+		  return false;
 	  if (no != other.no)
 		  return false;
 	  if (path == null) {
@@ -46,8 +56,9 @@ public class Photo implements Serializable {
   }
 	@Override
   public String toString() {
-	  return "Photo [no=" + no + ", path=" + path + "]";
+	  return "Photo [no=" + no + ", lno=" + lno + ", path=" + path + "]";
   }
+
 	
 	
 }

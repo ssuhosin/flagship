@@ -75,4 +75,17 @@ public class ContentControl {
 			.setError(ex.getMessage());
 		}
 	}
+	
+	@RequestMapping(value="/ajax/updateTitle",method=RequestMethod.POST, produces="application/json")
+	public Object ajaxUpdateTitle(Content content) throws Exception {
+		try {
+			contentDao.updateTitle(content);
+			return new JsonResult()
+			.setResultStatus(JsonResult.SUCCESS);
+		} catch(Throwable ex) {
+			return new JsonResult()
+			.setResultStatus(JsonResult.FAILURE)
+			.setError(ex.getMessage());
+		}
+	}
 }
