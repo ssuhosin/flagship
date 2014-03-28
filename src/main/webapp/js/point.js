@@ -1,5 +1,6 @@
 var poly = Array();
 var marksArray = Array();
+var infowindowArray = Array();
 function drawPoint(no) {
 	flagship.ajax('../point/ajax/list.do?no='+no, {
 		method: 'GET',
@@ -10,6 +11,7 @@ function drawPoint(no) {
 		  marksArray = Array();
 		  var latLng;
 
+		  var markIndex = 0;
 		  pointsData.forEach(function(value, key){
 		  	latLng = new google.maps.LatLng(value.lat,value.lng); 
 		  	if(key != 0) {
@@ -25,13 +27,29 @@ function drawPoint(no) {
 		  	.getPath()
 		  	.push(latLng);
 		  	
-		  	
+		  	//http://chart.apis.google.com/chart?chst=d_map_spin&chld=1|0|FFFF42|20|b|1
 		  	if(value.state == 1) {
 		      var marker = new google.maps.Marker({
 		        position: latLng,
-		        map: map
+		        map: map,
+		        icon: 'http://chart.apis.google.com/chart?chst=d_map_spin&chld=1|0|FFFF42|20|b|' + ++markIndex
+//		        icon: 'http://chart.apis.google.com/chart?chst=d_map_spin&chld=1|0|FFFF42|20|b|장소' + ++markIndex,
 		      });
 		      marksArray.push(marker);
+		      
+		      var contentString = "<div>" +
+					"<h2>" + value.location.title +"</h2>" +
+					"<p>" + value.location.description + "</p>" +
+					"</div>";
+					var infowindow = new google.maps.InfoWindow({
+						content: contentString,
+						lno : value.lno
+					});
+					infowindowArray.push(infowindow);
+					//console.log(infowindow);
+					google.maps.event.addListener(marker, 'click', function() {
+						infowindow.open(map,marker);
+					});
 		  	}
 		  	
 		  	if(value.transport != null) {
@@ -63,7 +81,6 @@ function drawPoint(no) {
 			alert('시스템이 바쁩니다.\n나중에 다시 시도해 주세요!');
 	}});
 }
-
 
 
 var locations = Array();
@@ -146,15 +163,35 @@ function positionCalc() {
     tempLatLng = LatLng;
     baseState = false;
 
+    
+    if(lastPoint != null) {
+    	var avgSpeed = (kmTo(new google.maps.LatLng(lastPoint.lat,lastPoint.lng), LatLng)*1000)/5;
+    	if(avgSpeed >= 50) {
+    		if(avgSpeed >= 100) {
+    			if(lastPoint.transport == null)
+    				addTransport(lastPoint.no,1);
+        } else {
+        	if(lastPoint.transport == null)
+        		addTransport(lastPoint.no,0);
+        }
+    	} else {
+    		if(lastPoint.state == 0) {
+    			updateStatePoint(lastPoint.no,1);
+        	addLocation(lastPoint.no,contentNo);
+    		}
+    	}
+    }
+    
+    
     addPoint(baseLatLng,0);
     console.log("1");
   } else {
     var avgSpeed = (kmTo(tempLatLng, LatLng)*1000)/5;
     if(avgSpeed >= 50) {
       if(avgSpeed >= 100) {
-      	addTransport(1);
+      	addTransport(pointNo,1);
       } else {
-      	addTransport(0);
+      	addTransport(pointNo,0);
       }
       
       baseLatLng = LatLng;
@@ -164,8 +201,8 @@ function positionCalc() {
       console.log("2");
     } else {
       if(baseState == false) {
-      	updateStatePoint(1);
-      	addLocation();
+      	updateStatePoint(pointNo,1);
+      	addLocation(pointNo,contentNo);
         baseState = true;
       }
       tempLatLng = LatLng;
@@ -192,7 +229,7 @@ function addPoint(latLng, state) {
 	}});
 }
 
-function updateStatePoint(state) {
+function updateStatePoint(pointNo,state) {
 	flagship.ajax('../point/ajax/updateState.do', {
 		method: 'POST',
 		data: {
@@ -206,8 +243,8 @@ function updateStatePoint(state) {
 		}});
 }
 
-function addTransport(state) {
-	flagship.ajax('../transport/ajax/add.do', {
+function addTransport(pointNo,state) {
+	flagship.ajax('transport/ajax/add.do', {
 		method: 'POST',
 		data: {
 			pno: pointNo,
@@ -220,21 +257,31 @@ function addTransport(state) {
 		}});
 }
 
-function addLocation() {
-	flagship.ajax('../location/ajax/add.do', {
+function addLocation(pointNo, contentNo) {
+	flagship.ajax('location/ajax/add.do', {
 		method: 'POST',
 		data: {
 			pno: pointNo,
-			title: "장소명을 입력하시오",
+			cno: contentNo,
+			title: "장소",
 			description: "내용을 입력하시오"
     },
-		success: function(){
+		success: function(location){
+			locationNo = location.no;
+			localStorage.setItem("locationNo",location.no);
 		},
 		error: function(){
 			//alert('시스템이 바쁩니다.\n나중에 다시 시도해 주세요!');
 	}});
 }
 
-
-
-
+function getLastPoint(no) {
+	flagship.ajax('point/ajax/listLast.do?no='+no, {
+		method: 'GET',
+		success: function(point){
+			lastPoint = point;
+		},
+		error: function(){
+			//alert('시스템이 바쁩니다.\n나중에 다시 시도해 주세요!');
+	}});
+}

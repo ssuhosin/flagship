@@ -4,10 +4,12 @@ function flagship(id) {
 	element.click = function(listener) { //ex) 조미료를 뿌림 
 		this.onclick = listener;
 	};
-	
 	return element; // ex) 조미료를 뿌린 감자를 리턴
 }
 
+//flagship.baseUrl = "http://192.168.0.10:9999/flagship/";
+//flagship.baseUrl = "http://121.138.120.81:9995/flagship/";
+//flagship.baseUrl = "http://192.168.10.154:9999/flagship/";
 
 flagship.ajax = function(url, settings) {
 	var xhr = new XMLHttpRequest();

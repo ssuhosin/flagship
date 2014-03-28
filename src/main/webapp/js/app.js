@@ -6,17 +6,34 @@ window.onload = function() {
 //   }
   
   flagship('loginBtn').click( function() {
-    flagship.ajax( '../auth/ajax/login.do', {
+    flagship.ajax( 'auth/ajax/login.do', {
         method: 'POST',
         data: {
           email: $('#emailText').val(),
           password: $('#passwordText').val()
         },
-        success: function(members){
-          if(members) {
+        success: function(member){
+          if(member) {
             location.href = '#pageone';
-            memberNo = members.no;
-            getContent(members.no);
+            memberNo = member.no;
+            getContent(member.no);
+            
+//            var intervalSec = 1000;
+//	          locationIndex = 0;
+//	          var intervalID = setInterval(function () {
+//	          	if(contentNo != null) {
+//	          		positionCalc();
+//	          	}
+//	          }, intervalSec);
+//
+//	          setTimeout(function () {
+//	            clearInterval(intervalID);
+//	          }, (locations.length + 1) * intervalSec);
+            
+//            console.log(contentNo);
+//            if(contentNo != null) {
+//            	getLastPoint(contentNo);
+//            }
           } else {
             alert("입력이 잘못되었습니다.");
           }
@@ -24,7 +41,7 @@ window.onload = function() {
   });
 
   flagship('joinBtn').click( function() {
-  	flagship.ajax( '../member/ajax/join.do', {
+  	flagship.ajax( 'member/ajax/join.do', {
   		method: 'POST',
   		data: {
   			email: $('#emailJoinText').val(),
@@ -40,19 +57,19 @@ window.onload = function() {
 
   flagship('startBtn').click( function() {
   	if(document.getElementById('newContentList') == null) {
-	    flagship.ajax( '../content/ajax/add.do', {
+	    flagship.ajax( 'content/ajax/add.do', {
 	        method: 'POST',
 	        data: {
 	          mno: memberNo,
 	          title: $('#titleText').val(),
 	          freq: $('#freqSelect').val(),
-	          speed: $('#speedSelect').val(),
+//	          speed: $('#speedSelect').val(),
 	          state: 0
 	        },
 	        success: function(content){
 	        	contentNo = content.no;
 	        	//
-	        	localStorage.setItem("contentNo", contentNo);
+//	        	localStorage.setItem("contentNo", contentNo);
 	        	//
 // 	        	currentContentNo = content.no;
 //         	$('#startBtn').text("Stop");
@@ -60,13 +77,12 @@ window.onload = function() {
 	        		document.getElementById('contentID').removeChild(value);
 	        	});
 	          getContent(memberNo);
-	          
-	          console.log(locations.length);
 	          var intervalSec = 1000;
 	          locationIndex = 0;
 	          var intervalID = setInterval(function () {
-	            positionCalc();
-	            
+	          	if(contentNo != null) {
+	          		positionCalc();
+	          	}
 	          }, intervalSec);
 
 	          setTimeout(function () {
@@ -78,7 +94,7 @@ window.onload = function() {
   
   flagship('endBtn').click( function() {
     if(document.getElementById('newContentList')) {
-      flagship.ajax( '../content/ajax/updateState.do', {
+      flagship.ajax( 'content/ajax/updateState.do', {
           method: 'POST',
           data: {
             mno: memberNo,
@@ -86,7 +102,8 @@ window.onload = function() {
           },
           success: function(){
           	//
-          	localStorage.setItem("contentNo", null);
+//          	localStorage.setItem("contentNo", null);
+          	contentNo = null;
           	//
             $("#contentID").children().each(function(index, value){
               document.getElementById('contentID').removeChild(value);
