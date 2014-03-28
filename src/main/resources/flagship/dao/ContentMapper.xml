@@ -29,6 +29,11 @@
 	 update CONTENTS set STATE = #{state} 
    where MNO = #{mno} and STATE = 0; 
 	</update>
+
+		<update id="updateTitle" parameterType="content">
+	 update CONTENTS set TITLE = #{title} 
+   where CNO = #{no};
+	</update>
 	
 	</mapper>
 

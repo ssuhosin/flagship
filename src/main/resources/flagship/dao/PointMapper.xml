@@ -17,9 +17,13 @@
 		select PNO,LAT,LNG,PDATE,STATE
 		from POINTS
 	</select>
+
+	<select id="selectCount" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM POINTS WHERE CNO=#{value} and LNO is not null;
+	</select>
 	
 	<select id="selectList" parameterType="int" resultMap="pointResultMap">
-		select PNO,LAT,LNG,PDATE,STATE
+		select PNO,LAT,LNG,PDATE,STATE,CNO,LNO
 		from POINTS
 		where CNO = #{value}
 	</select>

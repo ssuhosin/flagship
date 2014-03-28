@@ -5,6 +5,7 @@
 <mapper namespace="flagship.dao.PhotoDao">
   <resultMap type="photo" id="photoResultMap">
     <id     property="no"       column="PHNO"/>
+    <result property="lno"      column="LNO"/>
     <result property="path"     column="PATH"/>
   </resultMap>
 
@@ -13,6 +14,12 @@
     from PHOTOS
     where LNO = #{value}
 	</select>
+	
+	
+	<insert id="insert" parameterType="photo" useGeneratedKeys="true" keyProperty="no" keyColumn="PHNO">
+    INSERT INTO PHOTOS(LNO,PATH)
+    VALUES(#{lno},#{path})
+  </insert>
 	
 	</mapper>
 

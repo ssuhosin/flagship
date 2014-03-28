@@ -19,11 +19,26 @@
     from LOCATIONS T1 left outer join POINTS T2 using(LNO)
     where T2.CNO = #{value};
 	</select>
+
+	<select id="selectOne" parameterType="int" resultMap="locationResultMap">
+		select LNO, TITLE, DESCRIPTION from LOCATIONS where LNO=#{value};
+	</select>
 	
 	 <insert id="insert" parameterType="location" useGeneratedKeys="true" keyProperty="no" keyColumn="LNO">
     INSERT INTO LOCATIONS(TITLE,DESCRIPTION)
     VALUES(#{title},#{description})
   </insert>
+  
+	 
+	<update id="updateTitle" parameterType="location">
+   update LOCATIONS set TITLE = #{title} 
+   where LNO = #{no};
+  </update>
+
+	<update id="updateDesc" parameterType="location">
+   update LOCATIONS set DESCRIPTION = #{description} 
+   where LNO = #{no};
+  </update>
 	
 	</mapper>
 
