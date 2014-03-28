@@ -1,0 +1,24 @@
+#legend {
+	background: #FFF;
+	padding: 10px;
+	margin: 5px;
+	font-size: 12px;
+	font-family: Arial, sans-serif;
+	width:20%;
+}
+
+.color {
+	border: 1px solid;
+	height: 12px;
+	width: 12px;
+	margin-right: 3px;
+	float: left;
+}
+
+.vehicle {
+	background: #00BFFF;
+}
+
+.walk {
+	background: #00FF00;
+}

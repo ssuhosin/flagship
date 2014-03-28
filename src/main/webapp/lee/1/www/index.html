@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="viewport"
+	content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=medium-dpi" />
+<link rel="stylesheet" href="css/jquery.mobile-1.4.2.css" />
+<link rel="stylesheet" href="css/content.css" />
+<link rel="stylesheet" href="css/map.css" />
+<link rel="stylesheet" href="css/photoswipe.css" />
+<script type="text/javascript"
+	src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDWJdvu0r-PykFWvN6sv63RDrRmkGNxsRU&sensor=false"></script>
+<script src="js/jquery-1.9.1.js"></script>
+<script src="js/jquery.mobile-1.4.2.js"></script>
+<script src="js/flagship.js"></script>
+<script src="js/point.js"></script>
+<script src="js/map-1.1.js"></script>
+<script src="js/content.js"></script>
+<script src="js/location.js"></script>
+<script src="cordova.js"></script>
+<script src="js/photo.js"></script>
+
+
+<script type="text/javascript">
+// var currentContentNo;
+var lastPoint;
+var locationNo;
+var mapIntervalID;
+var pointNo;
+var contentNo;
+var memberNo;
+var flag = 0;
+var dataCno;
+var locationData;
+
+function moveMap() {
+  if(flag == 0) {
+    location.href="#pagethree";
+    flag = 1;
+  } else {
+    location.href="#pagetwo";
+    flag = 0;
+  }
+}
+
+$(document).ready(function(){
+//   $("#locationFooterID").removeProperty("border-width");
+//  localStorage.setItem("test","222");
+//  alert(localStorage.getItem("test"));
+//   contentNo = localStorage.getItem("contentNo");
+  locationNo = parseInt(localStorage.getItem("locationNo"));
+  initialize();
+  $(document).on("pageshow","#pagethree",function(){
+    google.maps.event.trigger(map, 'resize');
+    map.setCenter(centerPoint);
+  });
+
+  $(document).on("click","#contentBackBtnID",function(){
+    if(document.getElementById('accordianLoc')) {
+          document.getElementById('locationsID').removeChild(document.getElementById('accordianLoc'));
+    }
+    if(mapIntervalID) {
+      clearInterval(mapIntervalID);
+    }
+    for(var i=0; i<poly.length; i++){
+      poly[i].setMap(null);
+    }
+    for(var i=0; i<marksArray.length; i++){
+      marksArray[i].setMap(null);
+    }
+    
+    location.href = '#pageone';
+  });
+  $('#contentBack').click(function(){
+    $('.remove-item').remove();
+    
+  });
+});
+
+</script>
+<script src="js/app.js"></script>
+
+</head>
+<body>
+<div data-role="page" id="pagelogin">
+    <div data-role="header">
+      <h1>LOGIN</h1>
+    </div>
+  <div data-role="content" class="ui-content">
+    <div>
+      <label for="page_login_name">UserEmail :</label>
+      <input type="text" id="emailText" placeholder="이메일을 입력하시오."/>
+    </div>
+    <div>
+      <label for="page_login_pass">Password :</label>
+      <input type="password" id="passwordText" placeholder="비밀번호를 입력하시오"/>
+    </div>
+    <fieldset>
+      <a href="#" data-role="button" data-theme="a" data-inline="false" id="loginBtn">로그인</a>
+      <a href="#pageJoin" data-role="button" data-inline="false" data-theme="a">회원가입</a>
+    </fieldset>
+  </div>
+</div> 
+
+<div data-role="page" id="pageJoin">
+  <div data-role="header" data-theme="a" class="ui-corner-top">
+      <h1>회원가입</h1>
+<!--       <a href="#" class="ui-btn-right" data-role="button" data-icon="delete" data-iconpos="notext" data-theme="a" data-inline="true" data-rel="back">Delete</a> -->
+  </div>
+  <div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
+
+    <div data-role="fieldcontain">
+      <label for="page_login_name">이메일 :</label>
+      <input type="text" id="emailJoinText" placeholder="이메일을 입력하시오">
+      <label for="page_login_pass">비밀번호 :</label>
+      <input type="password" id="passwordJoinText" placeholder="비밀번호를 입력하시오">
+    </div>
+
+    <a href="#" data-role="button" data-theme="a" data-inline="false" id="joinBtn">가입</a>
+    <a href="#" data-role="button" data-theme="a" data-inline="false" data-rel="back">취소</a>
+  </div>
+</div>
+
+<div data-role="page" id="pageone">
+    <div data-role="header">
+<!--       <a href="#pagedialog" class="ui-btn ui-icon-gear ui-btn-icon-left ui-shadow ui-corner-all" data-rel="dialog">New</a> -->
+<!--       <a href="#popupDialog" data-rel="popup" data-position-to="window" data-role="button" data-inline="true" data-transition="pop" data-icon="gear" data-theme="a">Setting</a> -->
+      <a href="#overlayPanel" data-role="button" data-inline="true" data-icon="gear" data-theme="a">Setting</a>
+      <h1>CONTENTS</h1>
+<!--       <a id="logOutBtn" href="#" data-role="button" data-inline="false" data-rel="back" data-theme="a" data-icon="action">Logout</a> -->
+      <a id="logOutBtn" href="#" class="ui-btn ui-icon-action ui-btn-icon-right" data-theme="a">Logout</a>
+    </div>
+  <div data-role="main" class="ui-content"> 
+    
+    <div id="contentID">
+    </div>
+    
+    <div data-role="panel" id="overlayPanel" data-display="overlay" style="min-width: 300px">
+      <div data-role="header" data-theme="a" class="ui-corner-top">
+          <h1>Setting</h1>
+          <a href="#" class="ui-btn-right" data-rel="close" data-role="button" data-icon="delete" data-iconpos="notext" data-theme="a" data-inline="true" data-rel="back">Delete</a>
+      </div>
+      <div data-role="content" data-theme="d" class="ui-corner-bottom ui-content" style="padding-left: 0; padding-right: 0">
+      <div data-role="fieldcontain">
+        <label for="textinput-fc">Title:</label>
+        <input type="text" name="textinput-fc" id="titleText" placeholder="제목을 입력하시오" value="">
+        
+        <label for="select-native-fc">Freq:</label>
+        <select name="select-native-fc" id="freqSelect">
+          <option value="1">보통</option>
+          <option value="0">가끔</option>
+          <option value="2">자주</option>
+        </select>
+        
+      </div>
+
+       <a id="startBtn" href="#" data-role="button" data-inline="false" data-rel="close" data-theme="a">Create</a>
+       <a id="endBtn" href="#" data-role="button" data-inline="false" data-rel="close" data-theme="a">Finish</a>
+      </div>
+      
+     
+    </div>
+    
+  </div>
+</div> 
+
+<div data-role="page" id="pagetwo">
+    <div data-role="header">
+<!--       <a id='contentBackBtnID' href="#pageone" class="ui-btn ui-btn-inline ui-icon-arrow-l ui-btn-icon-left" data-rel="external">Back</a> -->
+      <a id='contentBackBtnID' href="#" class="ui-btn ui-btn-inline ui-icon-arrow-l ui-btn-icon-left">Back</a>
+      <h1>LOCATIONS</h1>
+      <a href="#" class="ui-btn ui-icon-location ui-btn-icon-right ui-shadow ui-corner-all" onclick="moveMap()">Map</a>
+    </div>
+  <div data-role="main" class="ui-content" style="padding-left: 0; padding-right: 0">
+    <div id="locationsID">
+    </div>
+<!--     <div id="locationsID" data-role="collapsible-set" data-theme="a" data-content-theme="a"> -->
+<!--     </div> -->
+  </div>
+  
+  <div id="locationFooterID" data-role="footer" data-position="fixed" data-type="horizontal" align="center">
+<!--     <a href="#" class="ui-btn ui-icon-camera ui-btn-icon-left ui-corner-all">Camera</a> -->
+    <button onclick="capturePhoto();">Capture Photo</button>
+    <img style="display:none;width:60px;height:60px;" id="smallImage" src="" />
+<!--     <img id="largeImage" src="data:image/jpeg;base64,file:///storage/sdcard0/Android/data/com.phonegap.helloworld/cache/1395898549697.jpg" /> -->
+  </div>
+<!--   <div data-role="footer" data-position="fixed"> -->
+<!--     <button class="ui-btn ui-shadow ui-icon-camera ui-corner-all ui-btn-icon-notext" data-inline="true" ></button> -->
+<!--   </div> -->
+</div> 
+
+<div data-role="page" id="pagethree">
+    <div data-role="header" id="pagethreeHeader">
+      <a href="#pagetwo" class="ui-btn ui-btn-inline ui-icon-arrow-l ui-btn-icon-left" data-rel="external">Back</a>
+      <h1>MAP</h1>
+    </div>
+  <div data-role="main" class="ui-content" id="pagethreeMain">
+<!--     <div id="map_canvas" style="height: 444px"></div> -->
+    <div id="map_canvas" ></div>
+  </div>
+</div> 
+
+<div data-role="page" id="photos-page" class="gallery-page">
+      <div data-role="header" id="photos-pageHeader">
+      <a href="#pagetwo" class="ui-btn ui-btn-inline ui-icon-arrow-l ui-btn-icon-left ui-btn-icon-notext ui-corner-all" data-rel="external" id="contentBack">Back</a>
+      <h1>PHOTOS</h1>
+      </div>
+    <div id='photoList'>
+  <div class="ccc" id="ccc">
+  </div>
+   </div>
+</div>
+
+</body>
+</html>
