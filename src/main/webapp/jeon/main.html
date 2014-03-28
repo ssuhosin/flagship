@@ -3,20 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
-<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css" />
-<link rel="stylesheet" href="../css/content.css" />
+<link rel="stylesheet" href="../css/jquery.mobile-1.4.2.css" />
+<link rel="stylesheet" href="../css/flagship.css" />
+<link rel="stylesheet" href="../css/map.css" />
 <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDWJdvu0r-PykFWvN6sv63RDrRmkGNxsRU&sensor=false"></script>
-<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-<script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
+<script src="../js/jquery-1.9.1.js"></script>
+<script src="../js/jquery.mobile-1.4.2.js"></script>
 <script src="../js/flagship.js"></script>
 <script src="../js/point.js"></script>
 <script src="../js/map-1.1.js"></script>
 <script src="../js/content.js"></script>
 <script src="../js/location.js"></script>
-
+<script src="../js/photo.js"></script>
 <script type="text/javascript">
 
 // var currentContentNo;
+var lastPoint;
 var mapIntervalID;
 var pointNo;
 var contentNo;
@@ -34,9 +36,11 @@ function moveMap() {
 }
 
 $(document).ready(function(){
-// 	localStorage.setItem("test","222");
-// 	alert(localStorage.getItem("test"));
-  contentNo = localStorage.getItem("contentNo");
+//  $("#editContentTitleInput").parent().removeClass();
+//   $("#locationFooterID").removeProperty("border-width");
+//  localStorage.setItem("test","222");
+//  alert(localStorage.getItem("test"));
+//   contentNo = localStorage.getItem("contentNo");
   initialize();
   $(document).on("pageshow","#pagethree",function(){
     google.maps.event.trigger(map, 'resize');
@@ -44,10 +48,10 @@ $(document).ready(function(){
   });
 
   $(document).on("click","#contentBackBtnID",function(){
-  	if(document.getElementById('accordianLoc')) {
-  	      document.getElementById('locationsID').removeChild(document.getElementById('accordianLoc'));
-  	}
-  	if(mapIntervalID) {
+    if(document.getElementById('accordianLoc')) {
+          document.getElementById('locationsID').removeChild(document.getElementById('accordianLoc'));
+    }
+    if(mapIntervalID) {
       clearInterval(mapIntervalID);
     }
     for(var i=0; i<poly.length; i++){
@@ -100,7 +104,7 @@ $(document).ready(function(){
       <label for="page_login_pass">비밀번호 :</label>
       <input type="password" id="passwordJoinText" placeholder="비밀번호를 입력하시오">
     </div>
-
+  
     <a href="#" data-role="button" data-theme="a" data-inline="false" id="joinBtn">가입</a>
     <a href="#" data-role="button" data-theme="a" data-inline="false" data-rel="back">취소</a>
   </div>
@@ -116,7 +120,7 @@ $(document).ready(function(){
       <a id="logOutBtn" href="#" class="ui-btn ui-icon-action ui-btn-icon-right" data-theme="a">Logout</a>
     </div>
   <div data-role="main" class="ui-content"> 
-    
+<!--     <input type="text" id="editContentTitleInput" placeholder="제목을 입력하시오" style="display: none;"> -->
     <div id="contentID">
     </div>
     
@@ -137,12 +141,6 @@ $(document).ready(function(){
           <option value="2">자주</option>
         </select>
         
-        <label for="select-native-fc">Speed:</label>
-        <select name="select-native-fc" id="speedSelect">
-          <option value="1">보통 걸음</option>
-          <option value="0">느린 걸음</option>
-          <option value="2">빠른 걸음</option>
-        </select>
       </div>
 
        <a id="startBtn" href="#" data-role="button" data-inline="false" data-rel="close" data-theme="a">Create</a>
@@ -169,8 +167,11 @@ $(document).ready(function(){
 <!--     </div> -->
   </div>
   
+  <div id="locationFooterID" data-role="footer" data-position="fixed" data-type="horizontal" align="center">
+    <a href="#" class="ui-btn ui-icon-camera ui-btn-icon-left ui-corner-all">Camera</a>
+  </div>
 <!--   <div data-role="footer" data-position="fixed"> -->
-<!--     <button class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-camera" data-inline="true" ></button> -->
+<!--     <button class="ui-btn ui-shadow ui-icon-camera ui-corner-all ui-btn-icon-notext" data-inline="true" ></button> -->
 <!--   </div> -->
 </div> 
 
