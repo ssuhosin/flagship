@@ -54,9 +54,27 @@ function getDateString(date) {
 }
 
 function moveLoc(no) {
-	location.href="#pagetwo";
-	drawPoint(no);
-	getLocation(no);
+	if(contentNo != null && contentNo == no) {
+		var intervalSec = 2000;
+		mapIntervalID = setInterval(function () {
+      for(var i=0; i<poly.length; i++){
+        poly[i].setMap(null);
+      }
+      for(var i=0; i<marksArray.length; i++){
+        marksArray[i].setMap(null);
+      }
+      if(document.getElementById('accordianLoc')) {
+	      document.getElementById('locationsID').removeChild(document.getElementById('accordianLoc'));
+      }
+      getLocation(contentNo);
+      drawPoint(contentNo);
+    }, intervalSec);
+		location.href="#pagetwo";
+	} else {
+		location.href="#pagetwo";
+		drawPoint(no);
+		getLocation(no);
+	}
 }
 
 //window.onload=function(){ 
