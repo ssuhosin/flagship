@@ -4,6 +4,7 @@ function getLocation(no){
 		success: function(locations){
 			var test = "";
 			var elementObj;
+			locationData = locations;
 			$('#locationsID').append("<div id='accordianLoc' data-role='collapsible-set' data-theme='a' data-content-theme='a'></div>");
 		  for(var index in locations) {
 		  	$('#accordianLoc').append(
@@ -21,6 +22,8 @@ function getLocation(no){
 		  			"<textarea id='editLocationDescInput" + index + "' style='width:90%; position: absolute; z-index: 9999;display: none;'>adf</textarea>" +
 		  			"<p style='display: inline;' id='locationDescId"+ index +"' datano='" + locations[index].no + "'>" + locations[index].description + "</p>" +
 		  			'<a href="#" id="locationDescBtn' + index + '" data-role="button" data-icon="edit" data-iconpos="notext" data-theme="c" data-inline="true" style="margin-left:10px; position: relative; top: 0px; left: 0px"></a>' +
+		  			"<button class='ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-camera ui-btn-icon-notext' dataIndex='" + index +"' id='cameraBtn"+ index +"'>" +  
+	        	"Camera" +  "</button>" +
 		  	"</div>");
 //		  	$("#contentEditBtn" + index).on("click", function (event, ui) {
 //				  $('#contentTitleId' + this.id.replace("contentEditBtn", "")).attr('contenteditable','true');
@@ -85,6 +88,36 @@ function getLocation(no){
 		  	});
 		  	
 		  	test += index + (index==locations.length-1?"1":",");
+		  	$("#cameraBtn" + index).bind("click",function(event,ui){
+		  		console.log(this);
+					var photosData = locationData[$(this).attr("dataIndex")].photos;
+					var imgTag;
+					
+//					$("#photoList").append("<div class='ccc' id='ccc'>");
+					
+					for(var index1 in photosData){
+//						imgTag = $(
+//								"<div class='remove-item'>" +
+//								"<div class='gallery-item'>" + "<a href='#popup" + index1 + "'>" + 
+//								"<img src='"+ photosData[index1].path +"' style='overflow:visible;'/>" +  "</a>" + "</div>" +
+//								"</div>"
+//						);
+						imgTag = $(
+								"<div class='remove-item'>" +
+								"<div class='gallery-item'>" + "<a href='#popup" + index1 + "' data-rel='popup' data-position-to='window' data-transition='fade'>" + 
+								"<img src='"+ photosData[index1].path +"' style='overflow:visible;'/>" +  "</a>" + "</div>" +
+								
+								"<div data-role='popup' id='popup" + index1 +"' data-overlay-theme='b' data-theme='b' data-corners='false'>" +
+								"<a href='#' data-rel='back' class='ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right'>" + "</a>" +
+								"<img class='popphoto' src='" + photosData[index1].path + "'>" +
+								"</div>" + "</div>"
+						);
+						$('#ccc').append(imgTag);
+						$('#ccc').trigger('create');
+					}
+//					console.log(photosData);
+					location.href = '#photos-page';
+				});
 		  }
 		  console.log(test);
 		  $('#accordianLoc').collapsibleset().trigger('create');

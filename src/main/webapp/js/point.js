@@ -244,7 +244,7 @@ function updateStatePoint(pointNo,state) {
 }
 
 function addTransport(pointNo,state) {
-	flagship.ajax('transport/ajax/add.do', {
+	flagship.ajax('../transport/ajax/add.do', {
 		method: 'POST',
 		data: {
 			pno: pointNo,
@@ -258,7 +258,7 @@ function addTransport(pointNo,state) {
 }
 
 function addLocation(pointNo, contentNo) {
-	flagship.ajax('location/ajax/add.do', {
+	flagship.ajax('../location/ajax/add.do', {
 		method: 'POST',
 		data: {
 			pno: pointNo,
@@ -276,7 +276,7 @@ function addLocation(pointNo, contentNo) {
 }
 
 function getLastPoint(no) {
-	flagship.ajax('point/ajax/listLast.do?no='+no, {
+	flagship.ajax('../point/ajax/listLast.do?no='+no, {
 		method: 'GET',
 		success: function(point){
 			lastPoint = point;

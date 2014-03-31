@@ -6,7 +6,7 @@ window.onload = function() {
 //   }
   
   flagship('loginBtn').click( function() {
-    flagship.ajax( 'auth/ajax/login.do', {
+    flagship.ajax( '../auth/ajax/login.do', {
         method: 'POST',
         data: {
           email: $('#emailText').val(),
@@ -41,7 +41,7 @@ window.onload = function() {
   });
 
   flagship('joinBtn').click( function() {
-  	flagship.ajax( 'member/ajax/join.do', {
+  	flagship.ajax( '../member/ajax/join.do', {
   		method: 'POST',
   		data: {
   			email: $('#emailJoinText').val(),
@@ -57,7 +57,7 @@ window.onload = function() {
 
   flagship('startBtn').click( function() {
   	if(document.getElementById('newContentList') == null) {
-	    flagship.ajax( 'content/ajax/add.do', {
+	    flagship.ajax( '../content/ajax/add.do', {
 	        method: 'POST',
 	        data: {
 	          mno: memberNo,
@@ -94,7 +94,7 @@ window.onload = function() {
   
   flagship('endBtn').click( function() {
     if(document.getElementById('newContentList')) {
-      flagship.ajax( 'content/ajax/updateState.do', {
+      flagship.ajax( '../content/ajax/updateState.do', {
           method: 'POST',
           data: {
             mno: memberNo,

@@ -10,19 +10,29 @@ function getContent(no){
 			$('#oldContentList').append("<li data-role='list-divider'>지난 여행기</li>");
 		  for(var index in contents) {
 		  	dateStrArray = contents[index].cdate.split("-");
-		  	dateObj = new Date(dateStrArray[0],dateStrArray[1],dateStrArray[2]);
-		  	
+		  	var dateDay = parseInt(dateStrArray[0]), dateMon = parseInt(dateStrArray[1]), dateYear = parseInt(dateStrArray[2]);
+		  	dateObj = new Date(dateDay,dateMon-1,dateYear);
 		  	if(contents[index].state == 1) {
 			  		listTag = $(
 			  				"<li style='margin: 10px'>" + 
-			  				"<a href='#' style='border: 1px solid #ededed' id='content" + index + "' dataNo='" + contents[index].no + "'>" +
+			  				"<a href='#' id='content" + index + "' dataNo='" + contents[index].no + "'>" +
 			  				"<img class='ui-li-thumb' style='min-height: 87px' src='http://tv03.search.naver.net/nhnsvc?quality=8&size=80x80&q=http://dbscthumb.phinf.naver.net/2765_000_1/20131013135007779_AUPS4Y8LD.jpg/45823.jpg?type=r128_1&wm=N#128x96'>" +
 			  				"<input type='hidden' id='editContentInput" + index + "' style='width:70%; position: absolute; z-index: 9999;' placeholder='제목을 입력하시오'>" +
 			  				"<h4 id='contentTitleId" + index + "' dataNo='" + contents[index].no + "'>" + contents[index].title + "</h4>" +
 			  				"<p>" + getDateString(dateObj) + "</p>" +
-			  				'<a href="#" id="contentEditBtn' + index + '" style="border: 1px solid #ededed" data-role="button" data-icon="edit" data-iconpos="notext" data-theme="c" data-inline="true">Edit</a>' +
+			  				'<a href="#" id="contentEditBtn' + index + '" data-role="button" data-icon="edit" data-iconpos="notext" data-theme="c" data-inline="true">Edit</a>' +
 			  				"</a>" +
 			  				"</li>");
+//			  		listTag = $(
+//			  				"<li style='margin: 10px'>" + 
+//			  				"<a href='#' style='border: 1px solid #ededed' id='content" + index + "' dataNo='" + contents[index].no + "'>" +
+//			  				"<img class='ui-li-thumb' style='min-height: 87px' src='http://tv03.search.naver.net/nhnsvc?quality=8&size=80x80&q=http://dbscthumb.phinf.naver.net/2765_000_1/20131013135007779_AUPS4Y8LD.jpg/45823.jpg?type=r128_1&wm=N#128x96'>" +
+//			  				"<input type='hidden' id='editContentInput" + index + "' style='width:70%; position: absolute; z-index: 9999;' placeholder='제목을 입력하시오'>" +
+//			  				"<h4 id='contentTitleId" + index + "' dataNo='" + contents[index].no + "'>" + contents[index].title + "</h4>" +
+//			  				"<p>" + getDateString(dateObj) + "</p>" +
+//			  				'<a href="#" id="contentEditBtn' + index + '" style="border: 1px solid #ededed" data-role="button" data-icon="edit" data-iconpos="notext" data-theme="c" data-inline="true">Edit</a>' +
+//			  				"</a>" +
+//			  		"</li>");
 			  		$('#oldContentList').append(listTag);
 						$('#content' + index).on("click", function(event, ui){
 							moveLoc($(this).attr("datano"));
@@ -69,14 +79,24 @@ function getContent(no){
 					$('#newContentList').append("<li data-role='list-divider'>현재 여행기</li>");
 					listTag = $(
 		  				"<li style='margin: 10px'>" + 
-		  				"<a href='#' style='border: 1px solid #ededed' id='content" + index + "' dataNo='" + contents[index].no + "'>" +
+		  				"<a href='#' id='content" + index + "' dataNo='" + contents[index].no + "'>" +
 		  				"<img class='ui-li-thumb' style='min-height: 87px' src='http://tv03.search.naver.net/nhnsvc?quality=8&size=80x80&q=http://dbscthumb.phinf.naver.net/2765_000_1/20131013135007779_AUPS4Y8LD.jpg/45823.jpg?type=r128_1&wm=N#128x96'>" +
 		  				"<input type='hidden' id='editContentInput" + index + "' style='width:70%; position: absolute; z-index: 9999;' placeholder='제목을 입력하시오'>" +
 		  				"<h4 id='contentTitleId" + index + "' dataNo='" + contents[index].no + "'>" + contents[index].title + "</h4>" +
 		  				"<p>" + getDateString(dateObj) + "</p>" +
-		  				'<a href="#" id="contentEditBtn' + index + '" style="border: 1px solid #ededed" data-role="button" data-icon="edit" data-iconpos="notext" data-theme="c" data-inline="true">Edit</a>' +
+		  				'<a href="#" id="contentEditBtn' + index + '" data-role="button" data-icon="edit" data-iconpos="notext" data-theme="c" data-inline="true">Edit</a>' +
 		  				"</a>" +
 		  				"</li>");
+//					listTag = $(
+//							"<li style='margin: 10px'>" + 
+//							"<a href='#' style='border: 1px solid #ededed' id='content" + index + "' dataNo='" + contents[index].no + "'>" +
+//							"<img class='ui-li-thumb' style='min-height: 87px' src='http://tv03.search.naver.net/nhnsvc?quality=8&size=80x80&q=http://dbscthumb.phinf.naver.net/2765_000_1/20131013135007779_AUPS4Y8LD.jpg/45823.jpg?type=r128_1&wm=N#128x96'>" +
+//							"<input type='hidden' id='editContentInput" + index + "' style='width:70%; position: absolute; z-index: 9999;' placeholder='제목을 입력하시오'>" +
+//							"<h4 id='contentTitleId" + index + "' dataNo='" + contents[index].no + "'>" + contents[index].title + "</h4>" +
+//							"<p>" + getDateString(dateObj) + "</p>" +
+//							'<a href="#" id="contentEditBtn' + index + '" style="border: 1px solid #ededed" data-role="button" data-icon="edit" data-iconpos="notext" data-theme="c" data-inline="true">Edit</a>' +
+//							"</a>" +
+//					"</li>");
 					$('#newContentList').append(listTag);
 //					$("#editContentInput" + index).css("background", "");
 					$('#content' + index).on("click", function(event, ui){
