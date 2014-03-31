@@ -6,6 +6,9 @@
 <link rel="stylesheet" href="../css/jquery.mobile-1.4.2.css" />
 <link rel="stylesheet" href="../css/flagship.css" />
 <link rel="stylesheet" href="../css/map.css" />
+<link rel="stylesheet" href="../css/content.css" />
+<link rel="stylesheet" href="../css/styles.css" />
+<link rel="stylesheet" href="../css/new11.css" />
 <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDWJdvu0r-PykFWvN6sv63RDrRmkGNxsRU&sensor=false"></script>
 <script src="../js/jquery-1.9.1.js"></script>
 <script src="../js/jquery.mobile-1.4.2.js"></script>
@@ -25,6 +28,8 @@ var contentNo;
 var memberNo;
 var flag = 0;
 var dataCno;
+var locationData;
+
 function moveMap() {
   if(flag == 0) {
     location.href="#pagethree";
@@ -64,6 +69,12 @@ $(document).ready(function(){
     location.href = '#pageone';
   });
   //console.log($( "#popupDialog" ).width());
+  $('#contentBack').click(function(event, ui){
+//   	event.stopPropagation();
+    $('.remove-item').remove();
+//     document.getElementById('ccc').removeChild();
+    location.href = "#pagetwo";
+  });
 });
 
 </script>
@@ -168,7 +179,8 @@ $(document).ready(function(){
   </div>
   
   <div id="locationFooterID" data-role="footer" data-position="fixed" data-type="horizontal" align="center">
-    <a href="#" class="ui-btn ui-icon-camera ui-btn-icon-left ui-corner-all">Camera</a>
+<!--     <a href="#" class="ui-btn ui-icon-camera ui-btn-icon-left ui-corner-all">Camera</a> -->
+    <button onclick="capturePhoto();" class="ui-btn ui-icon-camera ui-btn-icon-left ui-corner-all">Photo</button>
   </div>
 <!--   <div data-role="footer" data-position="fixed"> -->
 <!--     <button class="ui-btn ui-shadow ui-icon-camera ui-corner-all ui-btn-icon-notext" data-inline="true" ></button> -->
@@ -177,7 +189,7 @@ $(document).ready(function(){
 
 <div data-role="page" id="pagethree">
     <div data-role="header" id="pagethreeHeader">
-      <a href="#pagetwo" class="ui-btn ui-btn-inline ui-icon-arrow-l ui-btn-icon-left" data-rel="external">Back</a>
+      <a href="#pagetwo" class="ui-btn ui-btn-inline ui-icon-arrow-l ui-btn-icon-left" >Back</a>
       <h1>MAP</h1>
     </div>
   <div data-role="main" class="ui-content" id="pagethreeMain">
@@ -201,6 +213,15 @@ $(document).ready(function(){
 <!--     <h1>Footer Text In Dialog</h1> -->
 <!--   </div> -->
 <!-- </div>  -->
-
+  <div data-role="page" id="photos-page" class="gallery-page">
+      <div data-role="header" id="photos-pageHeader">
+      <a class="ui-btn ui-btn-inline ui-icon-arrow-l ui-btn-icon-left ui-btn-icon-notext ui-corner-all" id="contentBack">Back</a>
+      <h1>PHOTOS</h1>
+      </div>
+    <div id='photoList'>
+  <div class="ccc" id="ccc">
+  </div>
+   </div>
+</div>
 </body>
 </html>
